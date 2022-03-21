@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.2.228/pdf.min.js"></script>
+    <script defer src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script>
+    <script src="words-from-tesseract.js"></script>
+    <script src="FileSaver.js"></script>
+    <script src="generate-reflowable-html.js"></script>
+    <script src="extract-pdf.js"></script>
+    <script src="canvas-pixel-manipulation.js"></script>    
+    <script src="words-from-pixels.js"></script>
+    <script src="document-magnifier.js" defer></script>
+
+    <style>
+                    /* Defining the spacing between words*/
+            canvas {
+                border-style:solid;
+                border-color:transparent;
+                border-width:5px;
+                }
+
+            button {
+                background-color: #4CAF50; /* Green */
+                border: none;
+                color: white;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+                visibility: hidden;                
+                }
+
+             .progress
+               {
+                   position: absolute;
+                   top: 15%;
+                   left: 15%;
+                   right: 15%;
+                   bottom: 15%;
+                   background: gray;
+                   color: white;
+                   padding: 10%;
+                   font-size: 2rem;
+                   z-index: 1;
+                   visibility: hidden;
+                   border-radius: 15%;
+               }
+       </style>
+</head>
+
+<body>
+    <div id="progress" class="progress"></div>
+
+    <form>
+<h1>Magnify scanned raster documents with reflow</h1>
+<form>View a (scanned) pdf to a document that can be magnified/zoomed without horizontal scrolling through reflow.
+The conversion splits the image into the individual words as separate images.
+Once processed you get the option of saving the result into a single zoomable html file.</p>
+
+<p>By Frode Eika Sandnes, Oslo Metropolitan University, March, 2022.</p>
+
+<h2>Options</h2>
+ <p>
+        <input type="checkbox" id="contrast" name="contrast" value="contrast">
+        <label for="contrast">Enhance contrast (larger difference between foreground and background)</label><br>
+    </p>
+    <p>
+        <input type="checkbox" id="negative" name="negative" value="negative">
+        <label for="negative">Negative (swap foreground and background colours)</label><br>
+    </p>
+
+    <p>
+        <input type="checkbox" id="smallSize" name="smallSize" value="smallSize">
+        <label for="smallSize">Smaller size (with lower image quality)</label><br>
+    </p>
+
+
+<p>
+        <input type="radio" id="fast" name="engine" value="fast" checked>
+        <label for="fast">Fast processing, less accurate (simple approach)</label><br>
+
+        <input type="radio" id="accurate" name="engine" value="accurate">
+        <label for="accurate">High accuracy, slow processing (tesseract.js)</label><br>
+    </p> 
+<h2>Sekect pdf file to start</h2>
+        <label for="file-selector"><span>Select the pdf file to convert</span></label>
+        <input type="file" id="file-selector" accept=".pdf">
+            <script>
+                loadBinaryFile();   // handle for uploading the binary file content to the browser
+            </script>
+
+      </form>
+
+      <button id="save-document" onClick="onSave();" >Save reflowable document</button>
+
+      <div id="json"></div>
+
+</body>
+</html>
