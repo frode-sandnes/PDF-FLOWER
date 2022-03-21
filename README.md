@@ -6,3 +6,5 @@
 5. words-from-tesseract.js uses the tesseract.jw library to sement words
 6. canvas-pixel-manipulation.js is for low-level pixel manipulations, especially simple projections
 7. generate-reflowable-html.js creates the stand alone reflowable html file. This makes use of the FileSaver.js library.
+
+Run PDF-flower at https://frode-sandnes.github.io/PDF-FLOWER/
